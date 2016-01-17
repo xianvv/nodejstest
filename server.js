@@ -1,4 +1,6 @@
 var http = require("http");
+var events = require("events");
+var event = new events.EventEmitter();
 http.createServer(function(request, response) {
 	var fs = require("fs");
 	var data = fs.readFileSync('README.md');
@@ -8,7 +10,10 @@ http.createServer(function(request, response) {
 	response.writeHead(200, {
 		'Content-Type': 'text/plain'
 	});
-	response.write('Hello \n' + data.toString());
+	response.write('alert(\"yes\")');
+	response.on("error", function(e) {
+		console.log("error  sth");
+	});
 	//发送响应数据
 	response.end();
 }).listen(8888);
